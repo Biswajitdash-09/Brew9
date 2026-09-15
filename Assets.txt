@@ -1,0 +1,898 @@
+Absolutely. Since you’re building **BREW 9** in Antigravity IDE, the best approach is to generate **each asset separately** while keeping the same visual identity.
+
+Use the following prompts **one by one**. I’ve designed them so the generated assets remain visually consistent across the whole website.
+
+## BREW 9 — Global Brand Style
+
+Use this style concept in every prompt:
+
+* Brand: **BREW 9**
+* Tagline: **YOUR 9-TO-9 BREW**
+* Style: minimal, premium roadside coffee startup
+* Colors: Coffee Brown `#3A2418`, Cream `#F5EBDD`, Warm Beige `#D8C2A8`, Black `#151515`
+* Typography: **Manrope**
+* Design language: modern Indian roadside café + premium minimalist branding
+* Avoid: generic Starbucks-like branding, excessive gradients, neon colors, clutter, cartoon style
+* Photography: warm natural light, realistic, premium editorial photography
+
+---
+
+# 1. Primary BREW 9 Logo
+
+**Use this first because every other asset should match it.**
+
+```text
+Create the primary brand logo for a premium roadside coffee startup called “BREW 9”.
+
+Brand name:
+BREW 9
+
+Tagline:
+YOUR 9-TO-9 BREW
+
+Design a minimalist, sophisticated coffee brand identity using Coffee Brown #3A2418 and Cream #F5EBDD.
+
+Create a clean custom wordmark where “BREW” is bold and modern and the number “9” becomes the distinctive visual element of the brand, subtly inspired by the circular shape of a coffee cup and coffee swirl.
+
+Typography should feel similar to Manrope: geometric, modern, highly legible.
+
+The logo must feel:
+premium, youthful, urban, approachable, Indian startup, roadside coffee culture, memorable and scalable.
+
+Create:
+1. BREW 9 horizontal logo
+2. BREW 9 with tagline underneath
+3. clean version without tagline
+
+Flat vector-style branding, no mockup, no background decoration, no coffee cup photograph.
+
+Transparent background.
+High resolution.
+Suitable for website header, navbar, packaging and signage.
+```
+
+---
+
+# 2. BREW 9 Dark Version Logo
+
+```text
+Create a dark-background version of the BREW 9 primary logo.
+
+Brand:
+BREW 9
+
+Tagline:
+YOUR 9-TO-9 BREW
+
+Use the exact same logo identity and proportions as the primary BREW 9 logo.
+
+Use Cream #F5EBDD and Warm Beige #D8C2A8 for the logo on a Coffee Brown #3A2418 background.
+
+Minimal premium coffee startup branding.
+
+The number “9” should remain the distinctive brand symbol.
+
+No additional illustrations.
+No coffee beans.
+No unnecessary decorative elements.
+
+Flat vector branding.
+High resolution.
+Transparent background version preferred.
+Suitable for dark website sections, footer, signage and packaging.
+```
+
+---
+
+# 3. BREW 9 Brand Mark / Icon
+
+```text
+Create a standalone BREW 9 brand symbol.
+
+Design a minimal geometric icon based on the number “9”, subtly incorporating the visual feeling of a coffee cup, coffee swirl or circular coffee movement.
+
+The symbol must work independently without the words BREW 9.
+
+Use Coffee Brown #3A2418 and Cream #F5EBDD.
+
+The icon should be:
+minimal
+geometric
+memorable
+premium
+modern
+simple enough to recognize at very small sizes.
+
+Do not create a generic coffee bean icon.
+Do not use a generic coffee cup icon.
+
+The number 9 must be the core identity.
+
+Create a clean flat vector logo.
+Transparent background.
+Suitable for favicon, app icon, social profile and packaging.
+```
+
+---
+
+# 4. Favicon
+
+```text
+Create a favicon for BREW 9.
+
+Use the BREW 9 geometric “9” brand mark as the only visual element.
+
+Square composition.
+
+Coffee Brown #3A2418 symbol on Cream #F5EBDD background.
+
+Extremely simple and recognizable at 16x16 and 32x32 pixels.
+
+No text except the visual representation of the number 9.
+
+Flat vector design.
+High contrast.
+No shadows.
+No gradients.
+No decorative elements.
+
+Create a clean professional favicon for a modern coffee startup website.
+```
+
+---
+
+# 5. Hero Section — Roadside Coffee Kiosk
+
+```text
+Create a premium realistic hero photograph for the BREW 9 coffee website.
+
+Scene:
+A stylish small roadside coffee kiosk in India branded as BREW 9.
+
+The kiosk should look realistic and achievable for a startup with approximately ₹50,000 initial setup budget.
+
+Architecture:
+compact roadside kiosk
+minimal wooden and metal structure
+cream and coffee brown color palette
+simple BREW 9 signage
+small espresso/coffee preparation counter
+warm lighting
+clean organized counter
+
+Include a young Indian customer receiving a takeaway coffee.
+
+Show a BREW 9 paper coffee cup with the number 9 logo.
+
+Environment:
+Indian urban roadside
+early morning / golden hour
+subtle traffic and city atmosphere
+clean but authentic
+not luxurious or unrealistic
+
+Photography style:
+premium editorial commercial photography
+natural lighting
+realistic textures
+shallow depth of field
+warm coffee atmosphere
+
+Leave some clean negative space on one side for website hero text.
+
+16:9 website hero image.
+No readable text except BREW 9 branding.
+No Starbucks-like design.
+```
+
+---
+
+# 6. Brand Story / About Section Image
+
+```text
+Create a realistic editorial photograph representing the story behind BREW 9.
+
+Scene:
+A small independent Indian roadside coffee kiosk operated by a young entrepreneur.
+
+Show:
+freshly prepared coffee
+coffee beans
+simple espresso equipment
+paper takeaway cups
+a compact practical kiosk
+BREW 9 branding
+hands preparing coffee
+
+The visual story should communicate:
+small beginnings
+hard work
+good coffee
+affordable pricing
+daily routine
+entrepreneurship
+local Indian coffee culture
+
+Color palette:
+Coffee Brown #3A2418
+Cream #F5EBDD
+Warm Beige #D8C2A8
+
+Warm natural morning light.
+
+Premium startup brand photography.
+Authentic rather than luxurious.
+No corporate café chain appearance.
+
+4:3 composition.
+```
+
+---
+
+# 7. Espresso Product Image
+
+```text
+Create a premium realistic product photograph of a BREW 9 espresso.
+
+Single small espresso served in a minimalist ceramic espresso cup.
+
+Place the cup on a warm beige coffee counter.
+
+Include subtle BREW 9 branding in the environment.
+
+Visual identity:
+Coffee Brown #3A2418
+Cream #F5EBDD
+Warm Beige #D8C2A8
+
+Show rich espresso crema and realistic coffee texture.
+
+Minimal composition.
+Soft natural lighting.
+Premium commercial food photography.
+Clean background.
+No excessive props.
+
+Square 1:1 image.
+Suitable for a coffee menu card.
+```
+
+---
+
+# 8. Latte Product Image
+
+```text
+Create a premium realistic food photograph for the BREW 9 menu.
+
+Product:
+Hot latte in a minimalist BREW 9 takeaway cup.
+
+Show beautiful simple latte art on the surface.
+
+Cup should use the BREW 9 branding with a minimalist number 9 symbol.
+
+Place it on a warm beige surface with subtle natural shadows.
+
+Color palette:
+Coffee Brown #3A2418
+Cream #F5EBDD
+Warm Beige #D8C2A8
+
+Warm natural café lighting.
+Premium editorial food photography.
+Minimal background.
+No unnecessary decorations.
+
+Square 1:1 composition.
+```
+
+---
+
+# 9. Iced Coffee Product Image
+
+```text
+Create a premium realistic product photograph of BREW 9 iced coffee.
+
+Product:
+Transparent takeaway cup filled with iced coffee and visible ice cubes.
+
+Minimal BREW 9 logo on the cup.
+
+Natural condensation on the cup.
+Dark coffee color with creamy highlights.
+
+Place the drink on a warm beige surface.
+
+Background should be minimal and softly blurred.
+
+Lighting:
+warm natural daylight
+premium commercial beverage photography
+
+Brand palette:
+Coffee Brown #3A2418
+Cream #F5EBDD
+Warm Beige #D8C2A8
+
+Square 1:1.
+Modern Indian coffee startup aesthetic.
+```
+
+---
+
+# 10. Mocha Product Image
+
+```text
+Create a premium realistic food photograph for BREW 9.
+
+Product:
+hot chocolate mocha served in a BREW 9 takeaway cup.
+
+Rich dark coffee and chocolate tones.
+Subtle creamy foam.
+Minimal presentation.
+
+Place on a warm beige café counter.
+
+Include subtle BREW 9 branding.
+
+Warm cinematic natural lighting.
+Realistic beverage texture.
+Premium editorial food photography.
+
+Color palette:
+Coffee Brown #3A2418
+Cream #F5EBDD
+Warm Beige #D8C2A8
+
+Square 1:1 composition.
+Minimal background.
+```
+
+---
+
+# 11. Complete Featured Drinks Collection
+
+```text
+Create a premium commercial coffee photography collection for BREW 9.
+
+Show four drinks arranged as a cohesive product lineup:
+
+1. Espresso
+2. Latte
+3. Iced Coffee
+4. Mocha
+
+All drinks must use consistent BREW 9 branding.
+
+Use a consistent:
+Coffee Brown #3A2418
+Cream #F5EBDD
+Warm Beige #D8C2A8
+
+Visual style:
+minimal premium roadside coffee startup
+Indian urban coffee culture
+warm natural lighting
+realistic food photography
+clean beige background
+subtle shadows
+
+Each drink should be clearly distinguishable.
+
+No Starbucks branding.
+No generic café logos.
+
+Landscape 16:9 composition suitable for a “Featured Drinks” website section.
+```
+
+---
+
+# 12. Menu Grid Image Set
+
+Generate these **individually** so your `/menu` page has consistent images.
+
+### Americano
+
+```text
+Create a realistic premium product photograph of a BREW 9 Americano.
+
+Black coffee in a minimalist BREW 9 takeaway cup.
+Visible coffee surface.
+Warm beige background.
+Coffee Brown and Cream brand palette.
+Natural soft lighting.
+Minimal premium food photography.
+Square 1:1.
+```
+
+### Cappuccino
+
+```text
+Create a realistic premium product photograph of a BREW 9 Cappuccino.
+
+Cappuccino with creamy foam and subtle latte art.
+Minimal BREW 9 takeaway cup.
+Warm beige surface.
+Coffee Brown and Cream palette.
+Natural lighting.
+Premium commercial food photography.
+Square 1:1.
+```
+
+### Cold Brew
+
+```text
+Create a realistic premium product photograph of a BREW 9 Cold Brew.
+
+Clear takeaway cup with dark cold brew and ice.
+BREW 9 minimalist branding.
+Natural condensation.
+Warm beige background.
+Premium commercial beverage photography.
+Square 1:1.
+```
+
+### Masala Chai
+
+```text
+Create a premium realistic product photograph of BREW 9 Masala Chai.
+
+Indian masala chai served in a modern minimalist BREW 9 takeaway cup.
+
+Subtle steam.
+Warm brown tea.
+Small hints of authentic Indian spices in the environment.
+
+Modern premium Indian roadside coffee startup aesthetic.
+
+Warm natural lighting.
+Coffee Brown, Cream and Warm Beige palette.
+Square 1:1.
+```
+
+---
+
+# 13. Roadside BREW 9 Location Image
+
+```text
+Create a realistic premium photograph of a BREW 9 roadside coffee kiosk in India.
+
+The kiosk should be compact, practical and startup-friendly.
+
+Design:
+Coffee Brown #3A2418
+Cream #F5EBDD
+Warm Beige #D8C2A8
+
+Visible BREW 9 signage.
+
+Include:
+small serving counter
+coffee machine
+menu board
+takeaway cups
+subtle warm lights
+2-3 customers
+young Indian barista
+
+Environment:
+Indian city roadside
+evening atmosphere
+subtle traffic
+authentic urban surroundings
+
+The kiosk should look like a real business someone could actually build, not a luxury café.
+
+Premium editorial photography.
+16:9.
+```
+
+---
+
+# 14. Lifestyle — Morning Coffee
+
+```text
+Create a realistic lifestyle photograph for BREW 9.
+
+A young Indian professional standing near a roadside BREW 9 coffee kiosk in the morning, holding a takeaway coffee.
+
+The person should look natural and relatable.
+
+Show:
+morning city environment
+subtle traffic
+warm sunlight
+BREW 9 takeaway cup
+casual professional clothing
+
+Mood:
+fresh start
+daily routine
+energy
+9-to-9 working lifestyle
+
+Premium commercial lifestyle photography.
+Warm natural colors.
+Coffee Brown and Cream brand palette.
+16:9.
+```
+
+---
+
+# 15. Lifestyle — Evening Coffee
+
+```text
+Create a realistic lifestyle photograph for BREW 9.
+
+A small group of young Indian friends casually enjoying takeaway coffee near a BREW 9 roadside kiosk during early evening.
+
+Show:
+authentic conversation
+coffee cups
+warm kiosk lighting
+urban Indian roadside environment
+subtle evening traffic
+
+Mood:
+after-work
+friends
+relaxed
+affordable
+local coffee culture
+
+Premium editorial lifestyle photography.
+Warm natural lighting.
+No exaggerated luxury.
+16:9.
+```
+
+---
+
+# 16. “Good Coffee. Fair Price. Fast Service.” Visuals
+
+Generate **three separate images**.
+
+### Good Coffee
+
+```text
+Create a premium realistic photograph representing “GOOD COFFEE” for BREW 9.
+
+Close-up of freshly brewed coffee being prepared by a barista at a compact BREW 9 kiosk.
+
+Show:
+fresh espresso extraction
+coffee crema
+professional preparation
+BREW 9 branding
+
+Warm natural light.
+Coffee Brown and Cream palette.
+Premium editorial photography.
+Square 1:1.
+```
+
+### Fair Price
+
+```text
+Create a realistic premium photograph representing “FAIR PRICE” for BREW 9.
+
+Show a simple BREW 9 coffee takeaway cup beside a clean minimalist handwritten-style price/menu board.
+
+The visual should communicate affordable quality rather than cheapness.
+
+Indian roadside coffee startup atmosphere.
+Warm beige and coffee brown palette.
+Minimal composition.
+Premium commercial photography.
+Square 1:1.
+```
+
+### Fast Service
+
+```text
+Create a realistic premium photograph representing “FAST SERVICE” for BREW 9.
+
+Show a BREW 9 barista quickly handing a freshly prepared takeaway coffee to a customer at a compact roadside kiosk.
+
+Motion should feel natural and energetic.
+
+Indian urban environment.
+Warm natural lighting.
+Coffee Brown and Cream brand palette.
+Premium editorial photography.
+Square 1:1.
+```
+
+---
+
+# 17. Empty Menu / Placeholder Image
+
+```text
+Create a minimalist BREW 9 placeholder image for unavailable menu items.
+
+A simple abstract coffee cup silhouette combined subtly with the BREW 9 number 9 symbol.
+
+Use only:
+Coffee Brown #3A2418
+Cream #F5EBDD
+Warm Beige #D8C2A8
+
+Minimal flat geometric design.
+No realistic photography.
+No unnecessary text.
+
+Square 1:1.
+Suitable as a fallback image for missing menu photos.
+```
+
+---
+
+# 18. 404 Page Illustration
+
+```text
+Create a minimalist BREW 9 404 error page illustration.
+
+Concept:
+A takeaway coffee cup with the BREW 9 number 9 logo sitting on an empty roadside coffee counter, with a subtle visual metaphor of being lost or taking the wrong route.
+
+Mood:
+friendly
+minimal
+slightly playful
+premium
+
+Use BREW 9 brand palette:
+Coffee Brown #3A2418
+Cream #F5EBDD
+Warm Beige #D8C2A8
+
+Flat editorial illustration.
+Clean geometric shapes.
+No childish cartoon style.
+
+Leave empty space around the illustration for the website text:
+“Looks like you took a wrong turn.”
+
+Landscape 16:9.
+```
+
+---
+
+# 19. Error Page Illustration
+
+```text
+Create a minimalist BREW 9 website error-state illustration.
+
+Concept:
+A coffee machine temporarily paused with a small empty coffee cup beside it.
+
+The illustration should communicate:
+“Something went wrong, but we'll get your brew back.”
+
+BREW 9 visual identity.
+Coffee Brown #3A2418
+Cream #F5EBDD
+Warm Beige #D8C2A8
+
+Minimal geometric editorial illustration.
+Friendly but professional.
+No scary warning symbols.
+No excessive text.
+
+16:9.
+```
+
+---
+
+# 20. Social Media Profile Image
+
+```text
+Create the official BREW 9 social media profile image.
+
+Use only the BREW 9 geometric number 9 brand mark.
+
+Centered composition.
+Square format.
+
+Coffee Brown #3A2418 background.
+Cream #F5EBDD brand mark.
+
+Extremely clean and recognizable.
+
+No additional text.
+No shadows.
+No gradients.
+No photographs.
+
+1:1.
+Suitable for Instagram, YouTube and Facebook profile image.
+```
+
+---
+
+# 21. Social Media Cover / Banner
+
+```text
+Create a premium BREW 9 social media banner.
+
+Brand:
+BREW 9
+
+Tagline:
+YOUR 9-TO-9 BREW
+
+Visual:
+minimal roadside BREW 9 coffee kiosk
+takeaway coffee
+warm urban Indian environment
+subtle coffee atmosphere
+
+Use Coffee Brown #3A2418, Cream #F5EBDD and Warm Beige #D8C2A8.
+
+Place BREW 9 branding toward the left/center and keep important content within a safe central area.
+
+Premium editorial startup branding.
+Minimal.
+Modern.
+Wide landscape composition.
+No clutter.
+```
+
+---
+
+# 22. Loading Screen / Coffee Loader
+
+```text
+Create a minimalist BREW 9 loading animation concept.
+
+Visual:
+The BREW 9 number 9 gradually forms from a circular coffee swirl.
+
+The animation should feel like coffee being poured into a cup and transforming into the number 9.
+
+Minimal geometric design.
+Coffee Brown #3A2418 and Cream #F5EBDD.
+
+No complex animation.
+No 3D.
+No cartoon style.
+
+Create a clean frame-by-frame visual concept suitable for converting into a CSS/SVG loading animation.
+Transparent background.
+```
+
+---
+
+# 23. Legal Pages Header Image
+
+For `/privacy` and `/terms`.
+
+```text
+Create a subtle minimalist BREW 9 editorial background image for legal and informational website pages.
+
+Abstract visual inspired by:
+coffee circles
+paper texture
+coffee cup rings
+minimal geometric number 9 forms
+
+Use:
+Coffee Brown #3A2418
+Cream #F5EBDD
+Warm Beige #D8C2A8
+
+Extremely subtle and low contrast.
+
+Professional.
+Minimal.
+No readable text.
+No people.
+No photographs.
+
+Wide 16:9 background.
+Designed so black/dark text can remain readable over it.
+```
+
+---
+
+# 24. Open/Closed Location Illustration
+
+```text
+Create a small minimalist BREW 9 location-status illustration.
+
+Concept:
+A BREW 9 roadside coffee kiosk with a simple open/closed visual state.
+
+Show a compact coffee kiosk, takeaway cup and number 9 branding.
+
+Minimal geometric editorial illustration.
+
+Use:
+Coffee Brown #3A2418
+Cream #F5EBDD
+Warm Beige #D8C2A8
+
+Friendly and premium.
+No complicated background.
+
+Square 1:1.
+Suitable for location cards.
+```
+
+---
+
+# 25. BREW 9 Packaging Mockup
+
+This isn't strictly required for the website, but it will make your brand much stronger.
+
+```text
+Create a premium realistic BREW 9 coffee packaging photography scene.
+
+Show:
+BREW 9 takeaway paper cups
+small paper coffee bags
+minimal coffee packaging
+napkins
+small paper carrier
+
+All packaging must use the BREW 9 logo and number 9 brand mark.
+
+Brand palette:
+Coffee Brown #3A2418
+Cream #F5EBDD
+Warm Beige #D8C2A8
+
+Minimal typography inspired by Manrope.
+
+Arrange the products on a warm beige surface.
+
+Premium Indian startup coffee brand aesthetic.
+Realistic commercial product photography.
+Soft natural lighting.
+16:9.
+```
+
+---
+
+## Recommended generation order
+
+Don't generate randomly. Do it in this order:
+
+| #  | Asset             | Priority     |
+| -- | ----------------- | ------------ |
+| 1  | Primary Logo      | 🔴 Essential |
+| 2  | Dark Logo         | 🔴 Essential |
+| 3  | 9 Brand Mark      | 🔴 Essential |
+| 4  | Favicon           | 🔴 Essential |
+| 5  | Hero Kiosk        | 🔴 Essential |
+| 6  | About/Story       | 🔴 Essential |
+| 7  | Espresso          | 🔴 Essential |
+| 8  | Latte             | 🔴 Essential |
+| 9  | Iced Coffee       | 🔴 Essential |
+| 10 | Mocha             | 🔴 Essential |
+| 11 | Menu Images       | 🔴 Essential |
+| 12 | Location Kiosk    | 🔴 Essential |
+| 13 | Morning Lifestyle | 🟠 Important |
+| 14 | Evening Lifestyle | 🟠 Important |
+| 15 | Good Coffee       | 🟠 Important |
+| 16 | Fair Price        | 🟠 Important |
+| 17 | Fast Service      | 🟠 Important |
+| 18 | Placeholder       | 🟡 Useful    |
+| 19 | 404               | 🟡 Useful    |
+| 20 | Error             | 🟡 Useful    |
+| 21 | Social Profile    | 🟡 Useful    |
+| 22 | Social Banner     | 🟡 Useful    |
+| 23 | Loader            | 🟢 Optional  |
+| 24 | Legal Background  | 🟢 Optional  |
+| 25 | Packaging         | 🟢 Optional  |
+
+### Important for Antigravity
+
+For the **actual website**, I would **not use AI-generated images for the logo** if Antigravity can create SVG. Tell it:
+
+> **“Create the BREW 9 logo as a clean editable SVG using the approved brand mark, not as a raster image.”**
+
+For product/hero/lifestyle photography, use generated **WebP/AVIF** assets and keep them optimized.
+
+The most important thing is **consistency**: once you generate the primary BREW 9 logo, use that exact logo/reference for the kiosk, cups, packaging, social assets, and website—not a newly interpreted “BREW 9” logo each time.

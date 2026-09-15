@@ -1,0 +1,1483 @@
+# BREW 9 — FULL-STACK STARTUP WEBSITE
+
+## Production-Ready Next.js + Convex + Clerk Application
+
+You are an expert senior full-stack engineer, UI/UX designer, security engineer, SEO specialist, accessibility specialist, and DevOps engineer.
+
+Your task is to build a complete production-quality website/application for my coffee startup:
+
+# BRAND
+
+**Brand:** BREW 9
+**Tagline:** YOUR 9-TO-9 BREW
+
+Brand positioning:
+
+> BREW 9 is a modern, affordable, youth-focused coffee brand designed around the everyday daily grind — students, commuters, professionals, riders, travelers, and anyone who needs a good coffee on the move.
+
+The first physical business will be a small roadside coffee kiosk, but the website must be designed as the digital foundation for a future scalable coffee brand with multiple locations.
+
+Do NOT make this look like a generic café template.
+
+It should feel like a modern Indian consumer startup that could eventually scale into a multi-location coffee chain.
+
+---
+
+# 1. TECHNOLOGY STACK
+
+Use:
+
+* Next.js latest stable version
+* App Router
+* TypeScript
+* React
+* Tailwind CSS
+* shadcn/ui where useful
+* Convex as the backend/database/realtime layer
+* Clerk for authentication
+* Zod for runtime validation where appropriate
+* React Hook Form for complex forms
+* Lucide icons
+* Next/Image
+* Next/Font
+* ESLint
+* Prettier if appropriate
+
+Use Server Components by default.
+
+Use Client Components ONLY where interactivity/state/browser APIs actually require them.
+
+Do not turn entire pages into Client Components unnecessarily.
+
+Backend:
+
+* Convex queries
+* Convex mutations
+* Convex actions only when external/async operations are actually needed
+* Proper Convex schema
+* Proper indexes
+* Strong authorization checks
+* Typed generated Convex API
+
+Authentication:
+
+* Clerk + Convex integration
+* Google sign-in
+* Email/password authentication
+* Email verification
+* Password reset
+* Sign out
+* Protected routes
+* Authenticated user profile
+* Role-based authorization
+
+Do NOT use Convex Auth unless there is a compelling technical reason and the current official documentation confirms stable Next.js support.
+
+Never store passwords yourself.
+
+Never expose secrets in client-side code.
+
+---
+
+# 2. ARCHITECTURE
+
+Create a clean architecture suitable for future scaling.
+
+Suggested structure:
+
+app/
+layout.tsx
+page.tsx
+menu/
+locations/
+about/
+contact/
+account/
+admin/
+auth/
+privacy/
+terms/
+
+components/
+ui/
+layout/
+navigation/
+brand/
+menu/
+locations/
+account/
+admin/
+forms/
+
+convex/
+schema.ts
+users.ts
+menu.ts
+locations.ts
+orders.ts
+feedback.ts
+favorites.ts
+admin.ts
+functions as appropriate
+
+lib/
+constants/
+validation/
+seo/
+utils/
+security/
+
+public/
+images/
+icons/
+brand/
+
+Do not blindly follow this exact structure if a better architecture is more appropriate.
+
+Keep responsibilities separated.
+
+Avoid giant components.
+
+Avoid duplicated business logic.
+
+Create reusable components.
+
+---
+
+# 3. BRAND DESIGN SYSTEM
+
+The website must strictly follow the BREW 9 visual identity.
+
+## Brand personality
+
+* Minimal
+* Modern
+* Bold
+* Youthful
+* Friendly
+* Energetic
+* Urban
+* Affordable
+* Premium-looking without being expensive-looking
+* Fast
+* Simple
+
+Avoid:
+
+* Generic Starbucks-like design
+* Overly fancy café aesthetics
+* Excessive gradients
+* Excessive glassmorphism
+* Excessive animations
+* Clutter
+* Huge amounts of decorative elements
+* Generic AI-generated-looking UI
+
+---
+
+# 4. COLOR SYSTEM
+
+Primary colors:
+
+Coffee Brown:
+#3A2418
+
+Cream:
+#F5EBDD
+
+Warm Beige:
+#D8C2A8
+
+Black:
+#151515
+
+Use CSS variables/design tokens instead of hardcoding colors throughout components.
+
+Example conceptual system:
+
+--background
+--foreground
+--primary
+--primary-foreground
+--secondary
+--muted
+--border
+--accent
+--card
+
+The website should be primarily:
+
+* Cream backgrounds
+* Coffee brown typography
+* Black for strong contrast
+* Warm beige for secondary surfaces
+
+Use accent colors sparingly.
+
+Do not create a rainbow UI.
+
+Maintain strong contrast ratios.
+
+---
+
+# 5. TYPOGRAPHY
+
+Use a modern geometric sans-serif.
+
+Preferred:
+
+* Manrope
+* Inter
+* Geist
+
+Use Next/font.
+
+Typography hierarchy:
+
+Logo:
+BREW 9
+
+Hero:
+Bold / strong / large
+
+Supporting text:
+Clean and readable
+
+Body:
+Highly legible
+
+Buttons:
+Medium/Bold
+
+Avoid decorative serif fonts.
+
+Use responsive typography with clamp() or Tailwind responsive utilities where appropriate.
+
+---
+
+# 6. LOGO
+
+Primary wordmark:
+
+BREW 9
+
+The "9" should be visually distinctive.
+
+The 9 may subtly reference:
+
+* coffee swirl
+* cup handle
+* circular coffee movement
+* clock/daily routine
+
+Do not create an overly complicated logo.
+
+The logo must work at:
+
+* desktop
+* mobile
+* navbar
+* favicon
+* social profile
+* cup
+* kiosk
+* merchandise
+
+Create reusable Logo and BrandMark components.
+
+If actual logo assets are unavailable, create a clean text/vector-inspired placeholder implementation that can later be replaced without changing the application architecture.
+
+---
+
+# 7. CORE TAGLINE
+
+Primary:
+
+YOUR 9-TO-9 BREW
+
+Secondary brand messaging can include:
+
+GOOD COFFEE. FAIR PRICE. FAST SERVICE.
+
+GRAB. SIP. GO.
+
+COFFEE FOR THE DAILY GRIND.
+
+Use messaging naturally rather than repeating it everywhere.
+
+---
+
+# 8. WEBSITE GOALS
+
+The website should accomplish:
+
+1. Introduce BREW 9
+2. Display the menu
+3. Help customers find locations
+4. Allow users to create accounts
+5. Allow authenticated users to manage their profile
+6. Allow users to favorite items
+7. Eventually support ordering
+8. Eventually support loyalty/rewards
+9. Collect customer feedback
+10. Provide an admin dashboard
+11. Establish the brand online
+12. Be highly discoverable through SEO
+13. Be extremely fast on mobile
+14. Be accessible
+15. Be scalable for multiple physical locations
+
+Do NOT overbuild payment/order functionality unless it can be implemented cleanly.
+
+Build the architecture so it can be added later.
+
+---
+
+# 9. PUBLIC PAGES
+
+Build:
+
+## Homepage
+
+Sections:
+
+### Navbar
+
+BREW 9 logo
+
+Links:
+
+* Home
+* Menu
+* Locations
+* About
+
+Actions:
+
+* Sign In
+* Order / Coming Soon
+
+Mobile navigation must be excellent.
+
+---
+
+### Hero
+
+Large statement:
+
+YOUR 9-TO-9 BREW.
+
+Supporting message:
+
+Good coffee for the daily grind.
+
+CTA:
+
+VIEW MENU
+
+Secondary CTA:
+
+FIND A LOCATION
+
+Visual:
+
+Use high-quality coffee/kiosk imagery.
+
+Do not use random unrelated stock imagery.
+
+Build image components so assets can easily be replaced.
+
+---
+
+### Brand statement
+
+Explain:
+
+BREW 9 is built for everyday coffee moments.
+
+Short, confident copy.
+
+---
+
+### Featured drinks
+
+Show 3–6 products.
+
+Each product:
+
+* image
+* name
+* short description
+* price
+* category
+* favorite button where appropriate
+
+---
+
+### Why BREW 9
+
+Three pillars:
+
+GOOD COFFEE
+
+FAIR PRICE
+
+FAST SERVICE
+
+Use minimal iconography.
+
+---
+
+### Location section
+
+Show:
+
+Find your nearest BREW 9.
+
+Include location cards.
+
+Future-ready for Google Maps integration.
+
+---
+
+### CTA
+
+Example:
+
+READY FOR YOUR NEXT BREW?
+
+VIEW MENU
+
+---
+
+### Footer
+
+Include:
+
+* BREW 9
+* tagline
+* navigation
+* social links
+* contact
+* privacy
+* terms
+* copyright
+
+---
+
+# 10. MENU PAGE
+
+Create a beautiful responsive menu.
+
+Categories:
+
+HOT COFFEE
+
+* Classic Coffee — ₹30
+* Strong Brew — ₹40
+* Cappuccino — ₹50
+
+COLD
+
+* Cold Coffee — ₹50
+* Iced Latte — ₹60
+* Mocha — ₹70
+
+NON-COFFEE
+
+* Tea — ₹20
+* Lemon Tea — ₹30
+
+SIGNATURE
+
+* The 9 Brew — ₹60
+
+These are initial sample products.
+
+Store menu items in Convex.
+
+Do NOT hardcode product data into the UI.
+
+Admin users must eventually be able to modify:
+
+* name
+* description
+* price
+* category
+* image
+* availability
+* featured status
+* display order
+
+Use proper database indexes.
+
+---
+
+# 11. LOCATION SYSTEM
+
+Create a scalable locations system.
+
+Convex model should support:
+
+* name
+* address
+* city
+* state
+* postal code
+* latitude
+* longitude
+* opening hours
+* closing hours
+* phone
+* status
+* image
+* createdAt
+* updatedAt
+
+Location page should support:
+
+* location cards
+* opening/closed state
+* hours
+* address
+* directions CTA
+* phone CTA
+* map integration placeholder
+
+Do not hardcode locations.
+
+The architecture must support:
+
+1 location today
+
+and
+
+100+ locations later.
+
+---
+
+# 12. AUTHENTICATION
+
+Implement production-quality authentication with Clerk + Convex.
+
+Support:
+
+* Sign up
+* Sign in
+* Google OAuth
+* Email/password
+* Email verification
+* Password reset
+* Sign out
+* Session handling
+* Protected routes
+* Auth loading states
+* Auth error states
+
+Authenticated users get:
+
+* profile
+* email
+* name
+* avatar
+* favorites
+* preferences
+* account settings
+
+Never trust client-side role information.
+
+Every sensitive authorization decision MUST happen on the backend.
+
+Convex public functions must verify authentication before accessing protected data.
+
+Use the authenticated user's identity from the auth context.
+
+Never accept a userId from the client and assume it is trustworthy.
+
+If a function needs the current user:
+
+derive the user identity from the authenticated session.
+
+---
+
+# 13. AUTHORIZATION / ROLES
+
+Create roles:
+
+USER
+ADMIN
+
+Architecture should allow future roles:
+
+MANAGER
+STAFF
+SUPER_ADMIN
+
+Admin operations must be protected server-side.
+
+Do not rely only on hiding admin buttons.
+
+For every admin Convex mutation/query:
+
+1. Authenticate user
+2. Retrieve current user
+3. Verify role
+4. Validate arguments
+5. Perform operation
+6. Return only safe data
+
+Unauthorized users should receive appropriate errors.
+
+---
+
+# 14. USER PROFILE
+
+Create:
+
+/account
+
+Include:
+
+* profile information
+* avatar
+* email
+* favorite drinks
+* account settings
+* sign out
+
+Do not expose internal auth tokens.
+
+Do not expose sensitive authentication metadata.
+
+---
+
+# 15. ADMIN DASHBOARD
+
+Create an initial protected:
+
+/admin
+
+Dashboard should include:
+
+* total users
+* menu items
+* locations
+* featured items
+* feedback
+* recent activity
+
+Admin pages:
+
+/admin/menu
+/admin/locations
+/admin/users
+/admin/feedback
+
+Admin dashboard must be inaccessible to regular users.
+
+Use server-side/backend authorization.
+
+---
+
+# 16. FEEDBACK SYSTEM
+
+Allow authenticated users to submit feedback.
+
+Fields:
+
+* rating
+* message
+* optional location
+* createdAt
+
+Validate all fields.
+
+Rate-limit or otherwise protect the endpoint/function from abuse where practical.
+
+Sanitize/render user-generated content safely.
+
+Never dangerously render raw user HTML.
+
+Admin can view feedback.
+
+---
+
+# 17. FUTURE ORDERING ARCHITECTURE
+
+Do not implement a fake checkout just for appearance.
+
+Instead design the data architecture so the following can later be added:
+
+* cart
+* order
+* order items
+* payment
+* order status
+* pickup location
+* loyalty points
+
+Possible future statuses:
+
+PENDING
+CONFIRMED
+PREPARING
+READY
+COMPLETED
+CANCELLED
+
+Do not add unnecessary complexity now.
+
+---
+
+# 18. CONVEX DATABASE DESIGN
+
+Create a clean Convex schema.
+
+Potential tables:
+
+users
+menuItems
+categories
+locations
+favorites
+feedback
+orders
+orderItems
+auditLogs
+
+Only create tables actually required by the current application.
+
+Use:
+
+* indexes
+* normalized relationships where appropriate
+* timestamps
+* stable IDs
+* validation
+* appropriate optional fields
+
+Never use unbounded database scans when an index can be used.
+
+Avoid N+1 query patterns.
+
+Do not expose internal database implementation details to clients.
+
+---
+
+# 19. SECURITY REQUIREMENTS
+
+Treat security as a first-class requirement.
+
+Implement:
+
+* authentication
+* backend authorization
+* input validation
+* schema validation
+* safe error handling
+* secure environment variables
+* no secrets in Git
+* no secrets in client bundles
+* least-privilege access
+* safe database access
+* XSS prevention
+* CSRF-aware architecture
+* protection against unauthorized mutations
+* safe redirects
+* safe external links
+* safe image handling
+* rate limiting strategy where appropriate
+* abuse prevention
+* secure headers where appropriate
+* dependency hygiene
+
+Never trust:
+
+* client-provided role
+* client-provided user ID
+* client-provided price
+* client-provided permissions
+* client-provided ownership
+
+For anything involving money/orders later, calculate authoritative prices server-side.
+
+Never trust a price sent by the browser.
+
+Do not log:
+
+* passwords
+* auth tokens
+* session tokens
+* secrets
+* sensitive personal information
+
+Use generic user-facing errors and detailed safe server-side diagnostics.
+
+Do not expose stack traces to production users.
+
+---
+
+# 20. ERROR HANDLING
+
+Create:
+
+* global error boundary
+* route-level error boundaries where useful
+* not-found page
+* loading states
+* skeleton states
+* empty states
+* retry states
+* form validation errors
+* authentication error states
+* backend failure states
+
+Errors must be:
+
+* understandable
+* actionable
+* non-sensitive
+
+Never show raw backend errors to users.
+
+Use structured error handling.
+
+---
+
+# 21. ACCESSIBILITY
+
+Target WCAG 2.2 AA-level practices wherever applicable.
+
+Requirements:
+
+* semantic HTML
+* proper heading hierarchy
+* keyboard navigation
+* visible focus states
+* accessible buttons
+* accessible forms
+* labels for inputs
+* meaningful alt text
+* sufficient color contrast
+* aria-label only when necessary
+* no keyboard traps
+* skip-to-content link
+* accessible mobile navigation
+* accessible dialogs
+* accessible dropdowns
+* reduced motion support
+* screen-reader-friendly states
+
+Never use color alone to communicate information.
+
+Do not make clickable divs when a button/link is appropriate.
+
+---
+
+# 22. SEO
+
+Implement comprehensive technical SEO.
+
+Use Next.js Metadata API.
+
+Every public page needs:
+
+* unique title
+* unique description
+* canonical URL
+* Open Graph metadata
+* Twitter/X metadata
+* appropriate robots directives
+
+Create:
+
+/robots.txt
+
+/sitemap.xml
+
+Use Next.js file-based metadata where appropriate.
+
+Public pages should be indexable.
+
+Private pages should NOT be indexed:
+
+/account
+/admin
+/auth
+internal application routes
+
+Use appropriate noindex behavior.
+
+Implement structured data where relevant.
+
+Potential schema types:
+
+* Organization
+* LocalBusiness
+* CafeOrCoffeeShop where appropriate
+* Menu
+* BreadcrumbList
+
+Do not create fake reviews, ratings, addresses, prices, or business claims for structured data.
+
+Use real data only.
+
+SEO content must be natural and not keyword stuffed.
+
+Use semantic URLs:
+
+/menu
+/locations
+/locations/[slug]
+/about
+
+Avoid unnecessary query-parameter-driven pages for indexable content.
+
+---
+
+# 23. PERFORMANCE
+
+Optimize aggressively.
+
+Use:
+
+* Server Components by default
+* dynamic imports when justified
+* Next/Image
+* responsive image sizes
+* modern image formats
+* lazy loading below the fold
+* optimized fonts
+* minimal JavaScript
+* minimal third-party scripts
+* streaming/loading states where useful
+* caching/revalidation where appropriate
+
+Avoid:
+
+* massive client bundles
+* unnecessary useEffect
+* unnecessary global state
+* unnecessary dependencies
+* huge images
+* autoplay video
+* layout shifts
+
+Target excellent Core Web Vitals.
+
+---
+
+# 24. RESPONSIVE DESIGN
+
+Design mobile-first.
+
+Primary target:
+
+mobile roadside customer.
+
+Must look excellent at:
+
+320px
+375px
+390px
+430px
+768px
+1024px
+1280px
+1440px+
+
+Pay special attention to:
+
+* navigation
+* menu cards
+* CTA buttons
+* location cards
+* typography
+* touch targets
+* forms
+
+Minimum touch target should generally be around 44px.
+
+---
+
+# 25. UI INTERACTIONS
+
+Use subtle animations.
+
+Good:
+
+* hover transitions
+* button feedback
+* card hover
+* page transitions
+* menu filtering
+* skeleton loading
+* subtle reveal animations
+
+Avoid:
+
+* excessive animations
+* distracting parallax
+* unnecessary bouncing
+* long loading animations
+
+Respect:
+
+prefers-reduced-motion
+
+---
+
+# 26. DESIGN DETAILS
+
+The website should feel tactile and coffee-inspired.
+
+Use:
+
+* subtle borders
+* warm backgrounds
+* generous whitespace
+* strong typography
+* rounded corners used intentionally
+* small shadows
+* high-quality coffee photography
+* subtle grain/texture only if it improves the design
+
+Do not make everything rounded.
+
+Do not use excessive cards.
+
+Use a strong editorial layout.
+
+---
+
+# 27. NAVIGATION
+
+Desktop:
+
+BREW 9 | Menu | Locations | About
+
+Right:
+
+Sign In
+View Menu
+
+Mobile:
+
+Logo
+Menu icon
+
+Accessible mobile drawer.
+
+Escape should close the drawer.
+
+Focus should be managed appropriately.
+
+---
+
+# 28. SEO-FRIENDLY CONTENT
+
+Initial homepage copy can follow this direction:
+
+Headline:
+
+YOUR 9-TO-9 BREW.
+
+Supporting:
+
+Good coffee for the daily grind.
+
+Brand:
+
+BREW 9 is your everyday coffee stop — serving simple, satisfying coffee at a fair price, made for people always on the move.
+
+Do not overuse marketing language.
+
+Keep copy authentic.
+
+---
+
+# 29. ADMIN UX
+
+Admin UI should use the same BREW 9 design system but can be more functional.
+
+Include:
+
+* sidebar
+* dashboard
+* tables
+* filters
+* search
+* edit forms
+* confirmation dialogs
+* loading states
+* error states
+
+Destructive operations require confirmation.
+
+For deleting important entities, consider soft-delete/archive where appropriate.
+
+---
+
+# 30. DATA VALIDATION
+
+Validate all external/user-controlled inputs.
+
+Use Zod on frontend forms where useful.
+
+Convex arguments must also have proper Convex validators.
+
+Never rely solely on frontend validation.
+
+Frontend validation is for UX.
+
+Backend validation is for security.
+
+---
+
+# 31. ENVIRONMENT VARIABLES
+
+Create a safe `.env.example`.
+
+Never commit real credentials.
+
+Clearly distinguish:
+
+PUBLIC variables:
+
+NEXT_PUBLIC_CONVEX_URL
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
+SERVER-ONLY variables:
+
+CLERK_SECRET_KEY
+
+Any other secret must remain server-only.
+
+Never prefix secrets with NEXT_PUBLIC_.
+
+Document required environment variables.
+
+---
+
+# 32. CONFIGURATION
+
+Create appropriate configuration for:
+
+* development
+* preview
+* production
+
+Do not hardcode localhost URLs.
+
+Do not hardcode production URLs inside application logic.
+
+Use environment configuration.
+
+---
+
+# 33. TESTING
+
+Before considering the project complete, test:
+
+Authentication:
+
+* signup
+* login
+* logout
+* invalid credentials
+* protected pages
+* regular user accessing admin
+* admin accessing admin
+
+Database:
+
+* create
+* read
+* update
+* delete
+* authorization
+* invalid input
+
+UI:
+
+* desktop
+* mobile
+* keyboard navigation
+* screen-reader semantics
+
+SEO:
+
+* metadata
+* sitemap
+* robots
+* canonical URLs
+* structured data
+
+Performance:
+
+* image loading
+* JS bundle
+* layout shifts
+* responsive behavior
+
+Security:
+
+* unauthorized Convex calls
+* manipulated IDs
+* manipulated roles
+* manipulated prices
+* invalid inputs
+* XSS attempts
+* unsafe redirects
+
+---
+
+# 34. CODE QUALITY
+
+Follow strict engineering practices.
+
+Use:
+
+* TypeScript strict mode
+* no `any` unless absolutely justified
+* reusable components
+* meaningful naming
+* small functions
+* clear module boundaries
+* typed APIs
+* consistent error handling
+* comments only when they explain WHY
+* no dead code
+* no duplicated constants
+* no magic numbers
+* no unnecessary abstractions
+
+Do not silence TypeScript or ESLint errors just to make the build pass.
+
+Do not use:
+
+// @ts-ignore
+
+unless absolutely necessary and documented.
+
+---
+
+# 35. ANTI-GRAVITY EXECUTION RULE
+
+Do NOT simply generate the application in one uncontrolled pass.
+
+First:
+
+1. Inspect the existing repository.
+2. Determine whether a Next.js project already exists.
+3. Inspect package.json.
+4. Inspect existing source files.
+5. Inspect existing environment configuration.
+6. Determine whether Convex is already configured.
+7. Determine whether Clerk is already configured.
+8. Determine whether there are existing UI components.
+9. Determine whether there are existing assets.
+10. Preserve useful existing code where possible.
+
+Then create an implementation plan.
+
+Then implement incrementally.
+
+After every major implementation phase:
+
+* run type checking
+* run lint
+* run tests if available
+* fix errors
+* inspect affected UI
+* continue
+
+Do not rewrite functioning parts of the project unnecessarily.
+
+---
+
+# 36. IMPLEMENTATION PHASES
+
+Follow this order:
+
+PHASE 1
+Project architecture and dependencies
+
+PHASE 2
+Design system and brand components
+
+PHASE 3
+Global layout/navigation/footer
+
+PHASE 4
+Homepage
+
+PHASE 5
+Convex schema and backend
+
+PHASE 6
+Clerk authentication
+
+PHASE 7
+Menu system
+
+PHASE 8
+Locations
+
+PHASE 9
+User account
+
+PHASE 10
+Admin dashboard
+
+PHASE 11
+Feedback
+
+PHASE 12
+SEO
+
+PHASE 13
+Accessibility
+
+PHASE 14
+Security hardening
+
+PHASE 15
+Performance optimization
+
+PHASE 16
+Testing and bug fixing
+
+PHASE 17
+Final production-readiness audit
+
+---
+
+# 37. FINAL QUALITY GATE
+
+Before saying the project is complete, perform a complete audit.
+
+Check:
+
+[ ] Application builds successfully
+
+[ ] TypeScript passes
+
+[ ] ESLint passes
+
+[ ] No obvious runtime errors
+
+[ ] No broken routes
+
+[ ] Authentication works
+
+[ ] Authorization works
+
+[ ] Admin routes are protected
+
+[ ] Convex functions verify authorization
+
+[ ] User data is isolated correctly
+
+[ ] Forms validate input
+
+[ ] Error states exist
+
+[ ] Loading states exist
+
+[ ] Empty states exist
+
+[ ] Mobile layout works
+
+[ ] Desktop layout works
+
+[ ] Keyboard navigation works
+
+[ ] Focus states work
+
+[ ] Images have meaningful alt text
+
+[ ] Metadata exists
+
+[ ] Sitemap exists
+
+[ ] Robots configuration exists
+
+[ ] Canonicals are correct
+
+[ ] Private pages are not indexable
+
+[ ] Structured data is valid
+
+[ ] Images are optimized
+
+[ ] Fonts are optimized
+
+[ ] No secrets are committed
+
+[ ] No secret is exposed to client code
+
+[ ] No unnecessary dependencies
+
+[ ] No unnecessary Client Components
+
+[ ] No obvious security vulnerabilities
+
+[ ] No fake production data presented as real
+
+[ ] No placeholder lorem ipsum remains
+
+[ ] No TODOs for critical functionality
+
+[ ] No console errors in normal operation
+
+[ ] Production environment configuration is documented
+
+---
+
+# 38. IMPORTANT ENGINEERING PRINCIPLE
+
+Do not claim the application is "100% secure" or "100% error-free."
+
+Instead, implement industry-standard security, reliability, accessibility, SEO, and performance practices and explicitly identify anything that requires external configuration, credentials, infrastructure, penetration testing, or human review.
+
+Security must be enforced at the backend, not merely through the UI.
+
+SEO must be implemented through actual technical mechanisms, not just marketing copy.
+
+Accessibility must be implemented in the HTML/component architecture, not just claimed.
+
+---
+
+# 39. FINAL RESULT
+
+The final product should feel like:
+
+A real startup website for a modern Indian coffee brand.
+
+Not:
+
+* a coding demo
+* a generic café template
+* an AI-generated landing page
+* a SaaS dashboard pretending to be a coffee brand
+
+The visual hierarchy should immediately communicate:
+
+# BREW 9
+
+## YOUR 9-TO-9 BREW
+
+Good coffee.
+Fair price.
+Fast service.
+
+The application should be architected so that the first version can start as a single roadside coffee kiosk but eventually support a multi-location coffee business with users, menu management, locations, orders, loyalty, analytics, and administration.
+
+Start by inspecting the repository and current environment.
+
+Then create the implementation plan.
+
+Then execute the plan.
+
+Do not ask me to manually create files that you can create yourself unless credentials or external account setup genuinely requires my action.

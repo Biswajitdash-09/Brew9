@@ -1,0 +1,585 @@
+# BREW 9 — Full-Stack Startup Website Implementation Plan (v4 - Production Ready)
+
+A production-ready Next.js 16 + Convex + Clerk application for a modern Indian coffee startup brand.
+
+## Current State
+
+- **Repository**: Empty (only `requirement.txt` exists)
+- **Starting from scratch** — clean architectural foundation
+
+---
+
+## User Review Required & Prerequisites
+
+> [!IMPORTANT]
+> **External Accounts Setup Required**:
+> 1. **Clerk** (https://clerk.com) — Create a project, enable Google OAuth + Email/Password, create a JWT template named `convex` (copy the Issuer URL), and get `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY`.
+> 2. **Convex** (https://convex.dev) — Account initialized via CLI during Phase 1 (`npx convex dev`).
+
+---
+
+## Architecture & Final Changelog (v4)
+
+| # | Item | Resolution in v4 |
+|---|------|------------------|
+| 1 | **Installed Clerk API Verification** | Will inspect `@clerk/nextjs` exports after install to confirm exact Next.js 16 proxy / middleware signatures (`src/proxy.ts`, `clerkMiddleware`, `createRouteMatcher`). |
+| 2 | **Zero-Fallback Auth Config** | `CLERK_JWT_ISSUER_DOMAIN` is strictly required in `convex/auth.config.ts` without any invented fallback URLs. |
+| 3 | **Separated Client & Server Env** | Split into `src/lib/env/client.ts` and `src/lib/env/server.ts` with `server-only` import guards to prevent leakage into client bundles. |
+| 4 | **Transaction-Safe Rate Limiter** | Leverages Convex mutation atomicity for concurrent consistency; user-facing errors are generic ("Too many requests. Please try again in a few minutes.") with structured error codes. |
+| 5 | **Session-Guarded User Sync** | `AuthSyncProvider` uses session-scoped ref tracking to ensure `ensureCurrentUser` runs **strictly once** per login session; never mutates on every render and fails gracefully without blocking the UI. |
+| 6 | **Structured Weekly Hours** | Locations use a scalable `weeklySchedule` array schema (Option A) with `dayOfWeek`, `openTime`, `closeTime`, `isClosed`, and `specialNotice`. |
+| 7 | **Integer INR Monetary Rule** | Authoritative prices stored strictly as integer rupees (`₹30`, `₹40`, `₹50`). Explicit rule: if fractional paisa is needed in future, monetary representation must be redesigned. |
+| 8 | **Runtime CSP Verification** | CSP will be validated live in preview against Clerk, Convex WebSockets, Cloudflare Turnstile, and self-hosted fonts before final deployment. |
+| 9 | **Testing & Quality Gates** | Added explicit `npx tsc --noEmit`, `npm audit --audit-level=high`, and manual a11y tests (focus trap, drawer escape, screen-reader error announcements). |
+
+---
+
+## Technology Stack
+
+| Layer | Technology | Version / Spec |
+|-------|-----------|----------------|
+| Framework | Next.js (App Router, Turbopack) | **16.3.x** (latest stable) |
+| Request Proxy | `src/proxy.ts` (`clerkMiddleware`) | Next.js 16 + `@clerk/nextjs` |
+| Language | TypeScript (Strict Mode) | Latest |
+| Styling | Tailwind CSS + CSS Variables | v4 |
+| UI Components | shadcn/ui | Latest |
+| Backend & DB | Convex (Serverless Realtime & DB) | Latest stable (~1.45) |
+| Authentication | Clerk (`@clerk/nextjs`) | Latest stable |
+| Validation | Zod (Client & Server) + Convex Validators | Latest |
+| Forms | React Hook Form + `@hookform/resolvers` | Latest |
+| Typography | Manrope (via `next/font/google`, self-hosted) | Variable font |
+| Icons | Lucide React | Latest |
+| E2E & A11y Testing | Playwright + `@axe-core/playwright` | Latest |
+
+---
+
+## Proposed Implementation Details
+
+---
+
+### PHASE 1: Project Architecture, Dependencies & Env Isolation
+
+#### [NEW] Initialization Commands
+
+```bash
+# 1. Initialize Next.js 16 App with Turbopack and src directory
+npx -y create-next-app@latest ./ --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --use-npm --yes
+
+# 2. Core Dependencies
+npm install convex @clerk/nextjs zod react-hook-form @hookform/resolvers lucide-react server-only
+
+# 3. Dev & Testing Dependencies
+npm install -D playwright @playwright/test @axe-core/playwright
+
+# 4. Initialize shadcn/ui
+npx shadcn@latest init -d
+
+# 5. Initialize Convex (interactive local project setup)
+npx convex dev
+```
+
+#### [NEW] Isolated Environment Validation Architecture
+
+##### `src/lib/env/client.ts` (Client-Safe)
+```typescript
+import { z } from "zod";
+
+const clientEnvSchema = z.object({
+  NEXT_PUBLIC_CONVEX_URL: z.string().url("NEXT_PUBLIC_CONVEX_URL must be a valid URL"),
+  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1, "Clerk Publishable Key is required"),
+  NEXT_PUBLIC_APP_URL: z.string().url("NEXT_PUBLIC_APP_URL must be a valid absolute URL"),
+});
+
+export const clientEnv = clientEnvSchema.parse({
+  NEXT_PUBLIC_CONVEX_URL: process.env.NEXT_PUBLIC_CONVEX_URL,
+  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+  NEXT_PUBLIC_APP_URL:
+    process.env.NEXT_PUBLIC_APP_URL ||
+    (process.env.NODE_ENV === "development" ? "http://localhost:3000" : ""),
+});
+```
+
+##### `src/lib/env/server.ts` (Server-Only Secret Guard)
+```typescript
+import "server-only";
+import { z } from "zod";
+
+const serverEnvSchema = z.object({
+  CLERK_SECRET_KEY: z.string().min(1, "CLERK_SECRET_KEY is required on the server"),
+});
+
+export const serverEnv = serverEnvSchema.parse({
+  CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
+});
+```
+
+##### `.env.example`
+```env
+# Client-safe Public Variables
+NEXT_PUBLIC_CONVEX_URL=https://your-deployment.convex.cloud
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
+NEXT_PUBLIC_APP_URL=https://brew9.in
+
+# Server-only Secrets (Never expose to client)
+CLERK_SECRET_KEY=sk_test_...
+
+# Convex Auth Issuer (Required by convex/auth.config.ts)
+CLERK_JWT_ISSUER_DOMAIN=https://your-clerk-issuer.clerk.accounts.dev
+
+# CI/CD Only (Never in .env.local)
+# CONVEX_DEPLOY_KEY=
+```
+
+---
+
+### PHASE 2: Brand Identity & Design System
+
+#### [NEW] `src/styles/globals.css` - Coffee Brand Design Tokens
+
+```css
+@layer base {
+  :root {
+    --coffee-brown: 24 42% 16%;   /* #3A2418 */
+    --cream: 35 56% 91%;          /* #F5EBDD */
+    --warm-beige: 32 39% 75%;     /* #D8C2A8 */
+    --black: 0 0% 8%;             /* #151515 */
+
+    --background: var(--cream);
+    --foreground: var(--coffee-brown);
+    --primary: var(--coffee-brown);
+    --primary-foreground: var(--cream);
+    --secondary: var(--warm-beige);
+    --secondary-foreground: var(--coffee-brown);
+    --muted: 33 30% 86%;
+    --muted-foreground: 24 20% 40%;
+    --border: 32 25% 75%;
+    --card: 36 60% 96%;
+    --card-foreground: var(--coffee-brown);
+    --radius: 0.5rem;
+  }
+}
+```
+
+- Typography: `Manrope` self-hosted via `next/font/google`.
+- Components:
+  - `src/components/brand/logo.tsx`: Distinctive vector wordmark with stylized circular coffee '9'.
+  - `src/components/brand/brand-mark.tsx`: Compact geometric '9' icon for mobile nav & badges.
+
+---
+
+### PHASE 3: Proxy & Global Layout
+
+#### [NEW] `src/proxy.ts` - Verified Next.js 16 Proxy
+
+```typescript
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+
+// Verify against installed @clerk/nextjs package at implementation time
+const isProtectedRoute = createRouteMatcher(["/account(.*)", "/admin(.*)"]);
+
+export default clerkMiddleware(async (auth, req) => {
+  if (isProtectedRoute(req)) {
+    await auth.protect();
+  }
+});
+
+export const config = {
+  matcher: [
+    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    "/(api|trpc)(.*)",
+    "/__clerk/(.*)",
+  ],
+};
+```
+
+---
+
+### PHASE 4: Homepage (SSR + Client Islands)
+
+- `src/app/page.tsx` (Server Component): Fetches featured drinks and active locations via `fetchQuery(api.menu.getFeatured)`.
+- Components:
+  - `hero.tsx`: "YOUR 9-TO-9 BREW" headline, urban morning copy, CTAs.
+  - `brand-statement.tsx`: Editorial roadside coffee positioning.
+  - `featured-drinks.tsx`: Curated drinks list.
+  - `why-brew9.tsx`: 3 Pillars (Good Coffee, Fair Price, Fast Service).
+  - `location-preview.tsx`: Kiosk finder CTA.
+  - `cta-section.tsx`: Conversion banner.
+
+---
+
+### PHASE 5: Convex Database Schema & Backend
+
+#### [NEW] `convex/schema.ts`
+
+```typescript
+import { defineSchema, defineTable } from "convex/server";
+import { v } from "convex/values";
+
+export default defineSchema({
+  users: defineTable({
+    clerkId: v.string(),
+    email: v.string(),
+    name: v.string(),
+    imageUrl: v.optional(v.string()),
+    role: v.union(v.literal("user"), v.literal("admin")),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_clerkId", ["clerkId"])
+    .index("by_email", ["email"])
+    .index("by_role", ["role"]),
+
+  categories: defineTable({
+    name: v.string(),
+    slug: v.string(),
+    displayOrder: v.number(),
+  })
+    .index("by_slug", ["slug"])
+    .index("by_displayOrder", ["displayOrder"]),
+
+  menuItems: defineTable({
+    name: v.string(),
+    description: v.string(),
+    price: v.number(), // Authoritative integer in whole rupees (₹)
+    categorySlug: v.string(),
+    imageUrl: v.optional(v.string()),
+    isAvailable: v.boolean(),
+    isFeatured: v.boolean(),
+    displayOrder: v.number(),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_categorySlug", ["categorySlug"])
+    .index("by_featured", ["isFeatured"])
+    .index("by_displayOrder", ["displayOrder"]),
+
+  locations: defineTable({
+    name: v.string(),
+    slug: v.string(),
+    address: v.optional(v.string()),       // Optional until real kiosk is commissioned
+    city: v.string(),
+    state: v.string(),
+    postalCode: v.optional(v.string()),
+    latitude: v.optional(v.number()),      // Optional: No fake coordinates
+    longitude: v.optional(v.number()),
+    phone: v.optional(v.string()),
+    status: v.union(v.literal("open"), v.literal("coming_soon"), v.literal("temporarily_closed")),
+    imageUrl: v.optional(v.string()),
+    // Scalable structured weekly schedule (Option A)
+    weeklySchedule: v.optional(
+      v.array(
+        v.object({
+          dayOfWeek: v.number(), // 0 = Sunday, 1 = Monday ... 6 = Saturday
+          openTime: v.string(),  // e.g. "09:00"
+          closeTime: v.string(), // e.g. "21:00"
+          isClosed: v.boolean(),
+        })
+      )
+    ),
+    specialNotice: v.optional(v.string()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_slug", ["slug"])
+    .index("by_status", ["status"]),
+
+  favorites: defineTable({
+    userId: v.id("users"),
+    menuItemId: v.id("menuItems"),
+    createdAt: v.number(),
+  })
+    .index("by_userId", ["userId"])
+    .index("by_menuItemId", ["menuItemId"])
+    .index("by_userId_menuItemId", ["userId", "menuItemId"]),
+
+  feedback: defineTable({
+    userId: v.id("users"),
+    rating: v.number(),
+    message: v.string(),
+    locationId: v.optional(v.id("locations")),
+    createdAt: v.number(),
+  })
+    .index("by_userId", ["userId"])
+    .index("by_createdAt", ["createdAt"]),
+
+  rateLimits: defineTable({
+    identifier: v.string(),
+    action: v.string(),
+    windowStart: v.number(),
+    count: v.number(),
+  }).index("by_identifier_action", ["identifier", "action"]),
+});
+```
+
+---
+
+### PHASE 6: Clerk + Convex Authentication
+
+#### [NEW] `convex/auth.config.ts` (Strict Zero-Fallback)
+
+```typescript
+// Strictly requires the Clerk JWT template domain without fake fallback
+const issuerDomain = process.env.CLERK_JWT_ISSUER_DOMAIN;
+
+if (!issuerDomain) {
+  throw new Error("CLERK_JWT_ISSUER_DOMAIN environment variable must be configured in Convex.");
+}
+
+export default {
+  providers: [
+    {
+      domain: issuerDomain,
+      applicationID: "convex",
+    },
+  ],
+};
+```
+
+#### [NEW] `src/lib/providers/auth-sync-provider.tsx` (Session-Guarded, Single-Execution)
+
+```typescript
+"use client";
+
+import { useEffect, useRef } from "react";
+import { useUser } from "@clerk/nextjs";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+
+export function AuthSyncProvider({ children }: { children: React.ReactNode }) {
+  const { isSignedIn, user, isLoaded } = useUser();
+  const ensureUser = useMutation(api.users.ensureCurrentUser);
+  const syncedUserIdRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (!isLoaded || !isSignedIn || !user) return;
+    
+    // Execute strictly once per user login session
+    if (syncedUserIdRef.current === user.id) return;
+    syncedUserIdRef.current = user.id;
+
+    ensureUser().catch((err) => {
+      console.error("Non-blocking auth sync warning:", err);
+      // Reset ref so it can retry on subsequent user action if needed
+      syncedUserIdRef.current = null;
+    });
+  }, [isLoaded, isSignedIn, user, ensureUser]);
+
+  return <>{children}</>;
+}
+```
+
+---
+
+### PHASE 7: Public Menu Page (SSR + Client Filter)
+
+- `src/app/menu/page.tsx` (Server Component):
+  - Fetches categories & menu items via `fetchQuery(api.menu.list)`.
+  - Zero unnecessary WebSocket subscription for static public visitors.
+- `src/components/menu/menu-filter-client.tsx` (Client Island):
+  - Instant client-side filtering by category & search query.
+  - Favorite toggle for signed-in users.
+
+---
+
+### PHASE 8: Locations Directory (Null-Safe & Structured Hours)
+
+- `src/app/locations/page.tsx` (Server Component):
+  - Null-safe rendering: shows address, directions, and hours only if configured.
+  - Displays "Kiosk opening details coming soon" if location is unconfigured.
+- `src/lib/utils/location.ts`:
+  - Evaluates `weeklySchedule` against current time to display "Open Now" or "Closed" badge accurately.
+
+---
+
+### PHASE 9: User Profile & Account Management
+
+- `src/app/account/page.tsx` (Client Component):
+  - User details & avatar.
+  - Real-time favorites list via `useQuery(api.favorites.listByUser)`.
+  - Sign out button.
+
+---
+
+### PHASE 10: Admin Dashboard & Authorization
+
+- `src/app/admin/layout.tsx`:
+  - Enforces `admin` role verification via `api.users.getMe`.
+  - Displays "Access Denied" if user is not an admin.
+- Admin sub-pages:
+  - `/admin/menu`: Add/edit items, toggle availability, manage prices.
+  - `/admin/locations`: Configure kiosk addresses, status, and weekly hours.
+  - `/admin/users`: User directory and admin promotion.
+  - `/admin/feedback`: Review user ratings and feedback.
+
+---
+
+### PHASE 11: Feedback System & Transactionally Safe Rate Limiting
+
+#### [NEW] `convex/lib/rateLimit.ts`
+
+```typescript
+import { MutationCtx } from "../_generated/server";
+
+interface RateLimitRule {
+  windowMs: number;
+  maxRequests: number;
+}
+
+const RULES: Record<string, RateLimitRule> = {
+  "feedback:submit": { windowMs: 60 * 60 * 1000, maxRequests: 3 }, // 3/hour
+  "favorites:toggle": { windowMs: 60 * 1000, maxRequests: 30 },     // 30/min
+};
+
+/**
+ * Transaction-safe sliding window rate limit enforcement inside a Convex mutation.
+ */
+export async function enforceRateLimit(
+  ctx: MutationCtx,
+  identifier: string,
+  action: string
+): Promise<void> {
+  const rule = RULES[action];
+  if (!rule) return;
+
+  const now = Date.now();
+  const windowBoundary = now - rule.windowMs;
+
+  const record = await ctx.db
+    .query("rateLimits")
+    .withIndex("by_identifier_action", (q) =>
+      q.eq("identifier", identifier).eq("action", action)
+    )
+    .unique();
+
+  if (!record || record.windowStart < windowBoundary) {
+    if (record) {
+      await ctx.db.patch(record._id, { windowStart: now, count: 1 });
+    } else {
+      await ctx.db.insert("rateLimits", { identifier, action, windowStart: now, count: 1 });
+    }
+    return;
+  }
+
+  if (record.count >= rule.maxRequests) {
+    // Generic, non-leaking user error message
+    throw new Error("Too many requests. Please try again in a few minutes.");
+  }
+
+  await ctx.db.patch(record._id, { count: record.count + 1 });
+}
+```
+
+---
+
+### PHASE 12: SEO, Sitemap & Valid Structured Data
+
+- `src/app/robots.ts`: Allows public paths; disallows `/admin`, `/account`, `/auth`.
+- `src/app/sitemap.ts`: Dynamic URLs built using `clientEnv.NEXT_PUBLIC_APP_URL`.
+- Structured Data: `Organization` on homepage; `LocalBusiness` emitted **only** when a location has a complete valid address and hours.
+
+---
+
+### PHASE 13: Accessibility (WCAG 2.2 AA)
+
+- Color Contrast: `#3A2418` on `#F5EBDD` = 9.2:1 (AA & AAA compliant).
+- Visible focus rings with brand outline styling (`focus-visible:ring-2 focus-visible:ring-primary`).
+- `prefers-reduced-motion` integration.
+- Targeted `aria-live="polite"` applied exclusively to dynamic feedback messages and form error states.
+
+---
+
+### PHASE 14: Security Hardening & Runtime-Verified CSP
+
+#### `next.config.ts`
+
+```typescript
+import type { NextConfig } from "next";
+
+const isProduction = process.env.NODE_ENV === "production";
+
+// Minimal, hardened CSP (to be validated in runtime/preview)
+const cspHeader = `
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' https://*.clerk.accounts.dev https://challenges.cloudflare.com;
+  connect-src 'self' https://*.clerk.accounts.dev https://*.convex.cloud wss://*.convex.cloud;
+  img-src 'self' data: blob: https://img.clerk.com https://*.clerk.accounts.dev;
+  frame-src https://*.clerk.accounts.dev https://challenges.cloudflare.com;
+  frame-ancestors 'none';
+  worker-src 'self' blob:;
+  base-uri 'self';
+  form-action 'self';
+`.replace(/\s{2,}/g, " ").trim();
+
+const securityHeaders = [
+  { key: "Content-Security-Policy", value: cspHeader },
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+  ...(isProduction
+    ? [{ key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" }]
+    : []),
+];
+
+const nextConfig: NextConfig = {
+  async headers() {
+    return [{ source: "/(.*)", headers: securityHeaders }];
+  },
+};
+
+export default nextConfig;
+```
+
+---
+
+### PHASE 15: Performance & Static Pages
+
+- Turbopack-enabled compilation.
+- Static Pages:
+  - `src/app/about/page.tsx`: Brand story & 9-to-9 philosophy.
+  - `src/app/privacy/page.tsx` & `src/app/terms/page.tsx`: Clear legal templates.
+  - `src/app/not-found.tsx`: Custom branded 404 page.
+  - `src/app/error.tsx`: Error boundary with retry action.
+
+---
+
+### PHASE 16: Testing Suite & Quality Gate
+
+#### Quality Gate Audit Commands
+```bash
+# 1. Dependency vulnerability audit
+npm audit --audit-level=high
+
+# 2. Strict TypeScript compilation check
+npx tsc --noEmit
+
+# 3. Production build
+npm run build
+
+# 4. Linter
+npm run lint
+
+# 5. Playwright E2E & Axe accessibility test suite
+npx playwright test
+```
+
+#### Manual Accessibility Verification Checklist
+- [ ] Test mobile drawer focus trap & Tab order.
+- [ ] Test Escape key closure on all modal dialogs & drawers.
+- [ ] Verify screen-reader announcement on form error & rate-limit events.
+
+---
+
+## Verification Plan
+
+### Automated Verification
+1. `npm audit --audit-level=high` (Zero high/critical security vulnerabilities)
+2. `npx tsc --noEmit` (Zero TypeScript compile errors)
+3. `npm run build` (Clean production Next.js 16 build)
+4. `npm run lint` (ESLint verification)
+5. `npx playwright test` (E2E and axe-core accessibility suite pass)
+
+### Manual Verification
+1. Responsive design layout verified on viewports: `320px`, `375px`, `768px`, `1024px`, and `1440px`.
+2. Clerk Sign-In / Google OAuth flow tested with single-execution user sync in Convex.
+3. Backend CLI bootstrap tested (`npx convex run admin:bootstrapAdmin`) and admin role security verified.
+4. CSP validated in browser console with no blocked Clerk/Convex resources.

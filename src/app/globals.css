@@ -1,26 +1,81 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-manrope), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: var(--font-manrope), sans-serif;
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  /* BREW 9 Brand Color System */
+  --coffee-brown: #3A2418;
+  --cream: #F5EBDD;
+  --warm-beige: #D8C2A8;
+  --black: #151515;
+
+  --background: #F5EBDD;
+  --foreground: #3A2418;
+  --card: #FAF5EE;
+  --card-foreground: #3A2418;
+  --popover: #FAF5EE;
+  --popover-foreground: #3A2418;
+  --primary: #3A2418;
+  --primary-foreground: #F5EBDD;
+  --secondary: #D8C2A8;
+  --secondary-foreground: #151515;
+  --muted: #EADCCE;
+  --muted-foreground: #6B5546;
+  --accent: #D8C2A8;
+  --accent-foreground: #3A2418;
+  --destructive: #A33A2B;
+  --destructive-foreground: #FAF5EE;
+  --border: #D8C6B2;
+  --input: #D8C6B2;
+  --ring: #3A2418;
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased min-h-screen selection:bg-secondary selection:text-foreground;
+  }
+  html {
+    @apply scroll-smooth;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
